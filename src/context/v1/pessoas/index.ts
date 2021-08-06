@@ -9,7 +9,7 @@ const controller = new PessoasController();
 router.get("/", validator, async (req: Request, res: Response,next: NextFunction) => {
   const httpResponse = await controller.recoverAll(req, res, next);
   if(httpResponse) {
-    return res.sendStatus(200)
+    return res.send(httpResponse)
   }
   return res.sendStatus(404)
 });
@@ -18,7 +18,7 @@ router.get("/", validator, async (req: Request, res: Response,next: NextFunction
 router.get("/:id", validator, async (req: Request, res: Response,next: NextFunction) => {
   const httpResponse = await controller.recoverbyID(req, res, next);
   if(httpResponse) {
-    return res.sendStatus(200)
+    return res.send(httpResponse)
   }
   return res.sendStatus(404)
 });

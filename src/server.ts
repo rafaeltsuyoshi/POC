@@ -1,6 +1,9 @@
+import { init } from "./db/models/database"
+import routes from "./routes"
+
 const express = require("express")
 const cors = require("cors")
-import routes from "./routes"
+const sequelize = init()
 
 const app = express()
 
@@ -10,6 +13,10 @@ app.use(express.json())
 
 app.use('/api', routes)
 
-app.listen(3000, () => {
-    console.log('Server is running on port: 3000')
+void sequelize.authenticate().then(async () => {
+  app.listen(3000, () => {
+    console.log(`Listening at http://localhost:3000`)
+  })
+}).catch((error) => {
+  console.log(`Error connecting with database ${error}`)
 })
