@@ -6,7 +6,21 @@ export class PessoaRepository{
     }
 
     public async findAll(){
-        return await PessoaDB.findAll()
+        try{
+            return await PessoaDB.findAll()
+
+        } catch(err){   
+                console.error(`Error findAll People ${err}`)
+        }
+    }
+
+    public async findByID(id: string){
+        try {
+            return await PessoaDB.findByPk(id)
+        
+        } catch(err) {
+            console.error(`Error findByID ${err}`)
+        }
     }
 
     public async createPessoa(dados: any){
@@ -21,6 +35,10 @@ export class PessoaRepository{
     }
 
     public async deletePessoa(id: string): Promise<number>{
-        return await PessoaDB.destroy({ where: { id: id } }) 
+        try {
+            return await PessoaDB.destroy({ where: { id: id } }) 
+        } catch(err) {
+            console.error(`Error delete Person ${err}`)
+        }
     }
 }

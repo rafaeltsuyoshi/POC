@@ -9,7 +9,7 @@ export class PessoasController {
         this.pessoasUseCase = new PessoaUseCase()
     }
 
-    async recoverAll(req: Request, res: Response, next: NextFunction): Promise<Array<any>>    {
+    async recoverAll(req: Request, res: Response, next: NextFunction): Promise<any>    {
         try{
             const pessoas = await this.pessoasUseCase.getAllPessoas()
             
@@ -20,12 +20,17 @@ export class PessoasController {
         }
     };
 
-    async recoverbyID(req: Request, res: Response, next: NextFunction): Promise<Array<any>>{
-        const {id} = req.params
+    async recoverbyID(req: Request, res: Response, next: NextFunction): Promise<any>{
+        try{
+            const {id} = req.params
 
-        const pessoas = this.pessoasUseCase.getPessoaID(id);
+            const pessoa = await this.pessoasUseCase.getPessoaID(id);
+            
+            return res.json(pessoa)
         
-        return pessoas
+        } catch(err) {
+            return res.status(500).send(err)
+        }
     };
     async create(req: Request, res: Response, next: NextFunction): Promise<any>{
 

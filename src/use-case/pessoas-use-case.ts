@@ -1,6 +1,5 @@
 import { PessoaRepository } from "../repository/pessoa-repository"
-import { Sequelize } from "sequelize"
-import { PessoaDB } from "../db/models/pessoa"
+
 export class PessoaUseCase{
     
     private pessoaRepository: PessoaRepository 
@@ -8,22 +7,19 @@ export class PessoaUseCase{
         this.pessoaRepository = new PessoaRepository()
     }
 
-    async getAllPessoas(): Promise<Array<any>>{
-        const pessoas = this.pessoaRepository.findAll()
-        return []
+    async getAllPessoas(): Promise<any>{
+        return await this.pessoaRepository.findAll()
     }
 
-    async getPessoaID(ID: string){        
-        return []
+    async getPessoaID(id: string){        
+        return await this.pessoaRepository.findByID(id)
     }
     
     async createPessoa(dados: object) {
-        const pessoa = await this.pessoaRepository.createPessoa(dados)
-        return pessoa
+        return await this.pessoaRepository.createPessoa(dados)
     }
 
     async deletePessoa(id: string): Promise<number> {
-        const response = this.pessoaRepository.deletePessoa(id)
-        return response
+        return await this.pessoaRepository.deletePessoa(id)
     }
 }
