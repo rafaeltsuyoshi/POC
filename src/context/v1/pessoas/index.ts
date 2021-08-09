@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response, Router } from "express";
 import { PessoasController } from "./controller";
-import { validator, validatorCreate } from "./validator";
+import { validator, validatorCreate, validatorUpdate } from "./validator";
 
 const router = Router();
 const controller = new PessoasController();
@@ -21,7 +21,7 @@ router.post("/", validatorCreate, async (req: Request, res: Response,next: NextF
 });
 
 // atualiza dados de uma pessoa
-router.put("/:id", validator, async (req: Request, res: Response,next: NextFunction) => {
+router.put("/:id", validatorUpdate, async (req: Request, res: Response,next: NextFunction) => {
   await controller.updatebyID(req, res, next);
 });
 
