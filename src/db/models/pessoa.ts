@@ -15,10 +15,17 @@ export class PessoaDB extends Model {
   @Column
   sexo: string;
 
-  @Column
+  @Column({field: "CPF"})
   cpf: string;
 
   @Column
   email: string;
+
+  @Column({field: "created_at"})
+  createdAt: Date;
+
+  @Column({field: "updated_at"})
+  updatedAt: Date;
+
 }
 

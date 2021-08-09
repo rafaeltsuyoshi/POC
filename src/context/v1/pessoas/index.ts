@@ -25,11 +25,8 @@ router.get("/:id", validator, async (req: Request, res: Response,next: NextFunct
 
 // cria dados para uma pessoa
 router.post("/", validator, async (req: Request, res: Response,next: NextFunction) => {
-  const httpResponse = await controller.create(req, res, next);
-  if(httpResponse) {
-    return res.sendStatus(200)
-  }
-  return res.sendStatus(404)
+  await controller.create(req, res, next);
+
 });
 
 // atualiza dados de uma pessoa
