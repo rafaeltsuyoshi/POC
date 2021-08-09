@@ -7,7 +7,7 @@ export class PessoaUseCase{
         this.pessoaRepository = new PessoaRepository()
     }
 
-    async getAllPessoas(): Promise<any>{
+    async getAllPessoas() {
         return await this.pessoaRepository.findAll()
     }
 
@@ -17,6 +17,10 @@ export class PessoaUseCase{
     
     async createPessoa(dados: object) {
         return await this.pessoaRepository.createPessoa(dados)
+    }
+
+    async updatePessoa(id:string, dados: object): Promise<number> {
+        return await this.pessoaRepository.updatePessoa(id, dados)
     }
 
     async deletePessoa(id: string): Promise<number> {

@@ -23,7 +23,7 @@ export class PessoaRepository{
         }
     }
 
-    public async createPessoa(dados: any){
+    public async createPessoa(dados: object){
         try{
         const userToSave = new PessoaDB({ ...dados })
 
@@ -31,6 +31,15 @@ export class PessoaRepository{
         
         } catch(err){   
             console.error(`Error create pessoa ${err}`)
+        }
+    }
+
+    public async updatePessoa(id: string, dados: object): Promise<number> {
+        try {
+            const response = await PessoaDB.update(dados, { where: {id: id} })
+            return response[0]     
+        } catch(err) {
+            console.error(`Error update Person ${err}`)
         }
     }
 

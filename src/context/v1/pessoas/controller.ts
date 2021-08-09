@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response } from "express";
-import { json } from "sequelize/types";
 import { PessoaUseCase } from "../../../use-case/pessoas-use-case";
 // const useCase = require("/home/ryamashita/Downloads/POC/src/use-case/recoverAll")
 export class PessoasController {
@@ -35,17 +34,12 @@ export class PessoasController {
     async create(req: Request, res: Response, next: NextFunction): Promise<any>{
 
         try{
-            if(req.body){
+            if(req.body.primeiroNome){
 
                 const dados = {
-                    primeiroNome: req.body.primeiroNome,
-                    sobrenome: req.body.sobrenome,
-                    idade: req.body.idade,
-                    sexo: req.body.sexo,
-                    cpf: req.body.cpf,
-                    email: req.body.email
+                    ...req.body
                 }
-
+                
                 const pessoa = await this.pessoasUseCase.createPessoa(dados)        
                 
                 return res.status(201).json(pessoa)
@@ -53,14 +47,37 @@ export class PessoasController {
                 throw new Error("No data was send")
             }
         } catch(err) {
-            return res.status(500).send(err)
+            return res.status(500).send(err.message)
         }
     };
-    async updatebyID(req: Request, res: Response, next: NextFunction): Promise<boolean>{
-        if(req.body){
-            return true
+    async updatebyID(req: Request, res: Response, next: NextFunction): Promise<any>{
+        try{
+            const {id} = req.params
+
+            if(Object.keys(req.body).length > 0){
+
+                const dados = {
+                    ...req.body
+                }
+
+                const response = await this.pessoasUseCase.updatePessoa(id, dados)        
+
+                if(response === 1){
+                    res.send({
+                        message: "Person was updated successfully."
+                    })
+                } else {
+                    res.status(500).send({
+                        message: `Cannot update Person with id=${id}.`
+                        });
+                } 
+            } else {
+                throw new Error("No data was send")
+            }
+        
+        } catch(err) {
+            return res.status(500).send(err.message)
         }
-        return false
     };
     async deletebyID(req: Request, res: Response, next: NextFunction): Promise<any>{
         try{

@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response, Router } from "express";
 import { PessoasController } from "./controller";
-import { validator } from "./validator";
+import { validator, validatorCreate } from "./validator";
 
 const router = Router();
 const controller = new PessoasController();
@@ -16,7 +16,7 @@ router.get("/:id", validator, async (req: Request, res: Response,next: NextFunct
 });
 
 // cria dados para uma pessoa
-router.post("/", validator, async (req: Request, res: Response,next: NextFunction) => {
+router.post("/", validatorCreate, async (req: Request, res: Response,next: NextFunction) => {
   await controller.create(req, res, next);
 });
 
