@@ -7,7 +7,12 @@ const controller = new PessoasController();
 
 // recupera todos
 router.get("/", validator, async (req: Request, res: Response,next: NextFunction) => {
-  await controller.recoverAll(req, res, next);
+  try {
+    const pessoas = await controller.recoverAll(req, res, next);
+    res.json(pessoas)
+  } catch (err) {
+    return res.status(500).send(err)
+  }
 });
 
 // recupera pelo id

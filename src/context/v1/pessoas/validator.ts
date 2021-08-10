@@ -8,7 +8,7 @@ class PessoaBody {
   sobrenome: string;
   @Joiful.number().min(18).max(110).required()
   idade: number;
-  @Joiful.string().required()
+  @Joiful.string().equal("M","F").required()
   sexo: string;
   @Joiful.string().regex(/^[0-9]+$/).exactLength(11).required()
   cpf: string;
@@ -23,7 +23,7 @@ class PessoaUpdate {
     sobrenome: string;
     @Joiful.number().min(18).max(110).optional()
     idade: number;
-    @Joiful.string().optional()
+    @Joiful.string().equal("M","F").optional()
     sexo: string;
     @Joiful.string().regex(/^[0-9]+$/).exactLength(11).optional()
     cpf: string;

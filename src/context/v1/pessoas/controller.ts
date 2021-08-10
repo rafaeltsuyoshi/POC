@@ -8,18 +8,20 @@ export class PessoasController {
         this.pessoasUseCase = new PessoaUseCase()
     }
 
-    async recoverAll(req: Request, res: Response, next: NextFunction): Promise<any>    {
+    async recoverAll(req: Request, res: Response, next: NextFunction): Promise<any[]>    {
         try{
             const pessoas = await this.pessoasUseCase.getAllPessoas()
             
-            return res.json(pessoas)
+            // res.json(pessoas)
+            return pessoas
             
         } catch(err) {
-            return res.status(500).send(err)
+            // return res.status(500).send(err)
+            throw err
         }
     };
 
-    async recoverbyID(req: Request, res: Response, next: NextFunction): Promise<any>{
+    async recoverbyID(req: Request, res: Response, next: NextFunction): Promise<Response>{
         try{
             const {id} = req.params
 
@@ -31,7 +33,7 @@ export class PessoasController {
             return res.status(500).send(err)
         }
     };
-    async create(req: Request, res: Response, next: NextFunction): Promise<any>{
+    async create(req: Request, res: Response, next: NextFunction): Promise<Response>{
 
         try{
             if(req.body.primeiroNome){
@@ -50,7 +52,7 @@ export class PessoasController {
             return res.status(500).send(err.message)
         }
     };
-    async updatebyID(req: Request, res: Response, next: NextFunction): Promise<any>{
+    async updatebyID(req: Request, res: Response, next: NextFunction): Promise<Response>{
         try{
             const {id} = req.params
 
@@ -79,7 +81,7 @@ export class PessoasController {
             return res.status(500).send(err.message)
         }
     };
-    async deletebyID(req: Request, res: Response, next: NextFunction): Promise<any>{
+    async deletebyID(req: Request, res: Response, next: NextFunction): Promise<Response>{
         try{
             const {id} = req.params
 
